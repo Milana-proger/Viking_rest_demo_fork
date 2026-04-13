@@ -21,7 +21,7 @@
 - `name`
 - `age`
 - `heightCm`
-- `hairColor`
+- `hairColor` (`enum`)
 - `beardStyle` (`enum`)
 - `equipment` (`List<EquipmentItem>`)
 
@@ -47,19 +47,3 @@ mvn clean spring-boot:run
 mvn clean package
 java -jar target/viking-demo-1.0.0.jar
 ```
-
-## Что показать студентам на занятии
-
-1. Как GUI и REST API могут жить в одном приложении.
-2. Как Spring создаёт REST-контроллер.
-3. Как Swagger автоматически документирует метод `GET /api/vikings`.
-4. Как доменная модель сериализуется в JSON.
-5. Как сервис хранит состояние приложения в памяти.
-
-## Возможное развитие примера
-
-- добавить `POST /api/vikings`;
-- вынести хранение данных в БД;
-- заменить Swing на web-интерфейс;
-- добавить DTO и mapper;
-- показать различие между entity, DTO и API schema.
