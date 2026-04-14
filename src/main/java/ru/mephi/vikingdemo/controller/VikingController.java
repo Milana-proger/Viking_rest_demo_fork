@@ -52,4 +52,40 @@ public class VikingController {
     public void addViking(){
         vikingListener.testAdd();
     }
+
+        @PostMapping
+    @Operation(summary = "Добавить конкретного викинга", 
+            operationId = "addViking")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Викинг успешно добавлен"),
+            @ApiResponse(responseCode = "400", description = "Некорректные данные")
+    })
+    public Viking addViking(@RequestBody Viking viking) {
+        System.out.println("POST /api/vikings called with: " + viking.name());
+        return vikingService.addViking(viking);
+    }
+
+        @DeleteMapping("/{name}")
+    @Operation(summary = "Удалить викинга из таблицы", 
+            operationId = "deleteViking")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Викинг успешно удален"),
+            @ApiResponse(responseCode = "404", description = "Викинг не найден")
+    })
+    public void deleteViking(@PathVariable String name) {
+        System.out.println("DELETE /api/vikings/" + name + " called");
+        vikingService.deleteViking(name);
+    }
+
+        @PutMapping("/{name}")
+    @Operation(summary = "Перезапись параметров конкретного викинга", 
+            operationId = "updateViking")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Викинг успешно обновлен"),
+            @ApiResponse(responseCode = "404", description = "Викинг не найден")
+    })
+    public Viking updateViking(@PathVariable String name, @RequestBody Viking updatedViking) {
+        System.out.println("PUT /api/vikings/" + name + " called");
+        return vikingService.updateViking(name, updatedViking);
+    }
 }
