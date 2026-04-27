@@ -74,4 +74,5 @@ public class VikingService {
 
         vikings.set(index, vikingToUpdate);
         return vikingToUpdate;
+    }
 }
