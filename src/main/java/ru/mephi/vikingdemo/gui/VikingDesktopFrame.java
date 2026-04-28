@@ -131,4 +131,24 @@ public class VikingDesktopFrame extends JFrame {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
+
+    public void removeVikingByName(String name) {
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            Viking v = tableModel.getVikingAt(i);
+            if (v.name().equalsIgnoreCase(name)) {
+                tableModel.removeViking(i);
+                break;
+            }
+        }
+    }
+
+    public void updateVikingByName(Viking updatedViking) {
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            Viking v = tableModel.getVikingAt(i);
+            if (v.name().equalsIgnoreCase(updatedViking.name())) {
+                tableModel.updateViking(i, updatedViking);
+                break;
+            }
+        }
+    }
 }

@@ -66,7 +66,9 @@ public class VikingController {
     })
     public Viking addViking(@RequestBody Viking viking) {
         System.out.println("POST /api/vikings called with: " + viking.name());
-        return vikingService.addViking(viking);
+            Viking result = vikingService.addViking(viking);
+            vikingListener.notifyVikingAdded(result);
+            return vikingService.addViking(viking);
     }
 
         @DeleteMapping("/{name}")
@@ -78,7 +80,8 @@ public class VikingController {
     })
     public void deleteViking(@PathVariable String name) {
         System.out.println("DELETE /api/vikings/" + name + " called");
-        vikingService.deleteViking(name);
+            vikingService.deleteViking(name);
+            vikingListener.notifyVikingDeleted(name);
     }
 
         @PutMapping("/{name}")
@@ -90,6 +93,8 @@ public class VikingController {
     })
     public Viking updateViking(@PathVariable String name, @RequestBody Viking updatedViking) {
         System.out.println("PUT /api/vikings/" + name + " called");
+        Viking result = vikingService.updateViking(name, updatedViking);
+        vikingListener.notifyVikingUpdated(result);
         return vikingService.updateViking(name, updatedViking);
     }
 }
