@@ -104,12 +104,29 @@ public class VikingDesktopFrame extends JFrame {
         if (row == -1) return;
 
         Viking old = tableModel.getVikingAt(row);
-        try {
-            int newAge = Integer.parseInt(JOptionPane.showInputDialog(this, "New age:", old.age()));
-            int newHeight = Integer.parseInt(JOptionPane.showInputDialog(this, "New height:", old.heightCm()));
 
-            tableModel.updateViking(row, vikingService.updateViking(old.name(),
-                    new Viking(old.name(), newAge, newHeight, old.hairColor(), old.beardStyle(), old.equipment())));
+        try {
+            String ageStr = JOptionPane.showInputDialog(this, "New age:", old.age());
+            if (ageStr == null) return;
+            int newAge = Integer.parseInt(ageStr);
+
+            String heightStr = JOptionPane.showInputDialog(this, "New height:", old.heightCm());
+            if (heightStr == null) return;
+            int newHeight = Integer.parseInt(heightStr);
+
+            HairColor newHair = (HairColor) JOptionPane.showInputDialog(this, "New hair color:", "Select",
+                    JOptionPane.QUESTION_MESSAGE, null, HairColor.values(), old.hairColor());
+            if (newHair == null) return;
+
+            BeardStyle newBeard = (BeardStyle) JOptionPane.showInputDialog(this, "New beard style:", "Select",
+                    JOptionPane.QUESTION_MESSAGE, null, BeardStyle.values(), old.beardStyle());
+            if (newBeard == null) return;
+
+            Viking updated = vikingService.updateViking(old.name(), new Viking(
+                    old.name(), newAge, newHeight, newHair, newBeard, old.equipment()
+            ));
+            tableModel.updateViking(row, updated);
+            JOptionPane.showMessageDialog(this, "Updated!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
