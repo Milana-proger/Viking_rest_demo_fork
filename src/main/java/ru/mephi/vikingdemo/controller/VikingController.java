@@ -4,18 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.mephi.vikingdemo.model.Viking;
 import ru.mephi.vikingdemo.service.VikingService;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api/vikings")
@@ -96,5 +89,14 @@ public class VikingController {
         Viking result = vikingService.updateViking(name, updatedViking);
         vikingListener.notifyVikingUpdated(result);
         return vikingService.updateViking(name, updatedViking);
+    }
+
+    @PostMapping("/mass-generate")
+    @Operation(summary = "Массовая генерация викингов")
+    public List<Viking> massGenerateVikings(@RequestParam int count) {
+        System.out.println("POST /api/vikings/mass-generate called with count=" + count);
+        List<Viking> generated = vikingService.generateRandomVikings(count);
+        vikingListener.notifyVikingsGenerated(generated);
+        return generated;
     }
 }

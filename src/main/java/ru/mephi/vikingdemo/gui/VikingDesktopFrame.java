@@ -54,6 +54,10 @@ public class VikingDesktopFrame extends JFrame {
         bottomPanel.add(deleteButton);
         bottomPanel.add(updateButton);
         add(bottomPanel, BorderLayout.SOUTH);
+
+        JButton massGenerateButton = new JButton("Массовая генерация");
+        massGenerateButton.addActionListener(event -> onMassGenerate());
+        bottomPanel.add(massGenerateButton);
     }
 
     private void onCreateViking() {
@@ -149,6 +153,27 @@ public class VikingDesktopFrame extends JFrame {
                 tableModel.updateViking(i, updatedViking);
                 break;
             }
+        }
+    }
+
+    private void onMassGenerate() {
+        String input = JOptionPane.showInputDialog(this, "Сколько викингов сгенерировать?");
+        if (input == null) return;
+
+        try {
+            int count = Integer.parseInt(input);
+            List<Viking> generated = vikingService.generateRandomVikings(count);
+
+            for (Viking v : generated) {
+                tableModel.addViking(v);
+            }
+
+            JOptionPane.showMessageDialog(this, "Добавлено " + generated.size() + " викингов!");
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Введите число!");
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(this, "Ошибка: " + e.getMessage());
         }
     }
 }

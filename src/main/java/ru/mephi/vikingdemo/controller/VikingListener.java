@@ -10,6 +10,8 @@ import ru.mephi.vikingdemo.gui.VikingDesktopFrame;
 import ru.mephi.vikingdemo.model.Viking;
 import ru.mephi.vikingdemo.service.VikingService;
 
+import java.util.List;
+
 /**
  *
  * @author test2023
@@ -47,6 +49,14 @@ public class VikingListener {
     public void notifyVikingUpdated(Viking viking) {
         if (gui != null) {
             gui.updateVikingByName(viking);
+        }
+    }
+
+    public void notifyVikingsGenerated(List<Viking> vikings) {
+        if (gui != null) {
+            for (Viking viking : vikings) {
+                gui.addNewViking(viking);
+            }
         }
     }
 }

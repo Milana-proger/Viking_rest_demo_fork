@@ -3,6 +3,7 @@ package ru.mephi.vikingdemo.service;
 import org.springframework.stereotype.Service;
 import ru.mephi.vikingdemo.model.Viking;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,5 +75,29 @@ public class VikingService {
 
         vikings.set(index, vikingToUpdate);
         return vikingToUpdate;
+    }
+
+    public List<Viking> generateRandomVikings(int count) {
+        if (count <= 0) {
+            throw new RuntimeException("Количество викингов должно быть больше 0");
+        }
+
+        List<Viking> generatedVikings = new ArrayList<>();
+        int generated = 0;
+
+        while (generated < count) {
+            Viking newViking = vikingFactory.createRandomViking();
+
+            boolean exists = vikings.stream()
+                    .anyMatch(v -> v.name().equalsIgnoreCase(newViking.name()));
+
+            if (!exists) {
+                vikings.add(newViking);
+                generatedVikings.add(newViking);
+                generated++;
+            }
+            // если имя занято - просто пропускаем и генерируем другого
+        }
+        return generatedVikings;
     }
 }
