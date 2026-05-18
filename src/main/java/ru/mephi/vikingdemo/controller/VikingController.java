@@ -9,6 +9,9 @@ import ru.mephi.vikingdemo.model.Viking;
 import ru.mephi.vikingdemo.service.VikingService;
 
 import java.util.List;
+import ru.mephi.vikingdemo.model.BeardStyle;
+import ru.mephi.vikingdemo.model.HairColor;
+import ru.mephi.vikingdemo.service.VikingStatisticsService;
 
 @RestController
 @RequestMapping("/api/vikings")
@@ -17,10 +20,12 @@ public class VikingController {
 
     private final VikingService vikingService;
     private VikingListener vikingListener;
+    private final VikingStatisticsService vikingStatisticsService;
 
-    public VikingController(VikingService vikingService, VikingListener vikingListener) {
+    public VikingController(VikingService vikingService, VikingListener vikingListener, VikingStatisticsService vikingStatisticsService) {
         this.vikingService = vikingService;
         this.vikingListener = vikingListener;
+        this.vikingStatisticsService = vikingStatisticsService;
     }
     
     @GetMapping
@@ -98,5 +103,37 @@ public class VikingController {
         List<Viking> generated = vikingService.generateRandomVikings(count);
         vikingListener.notifyVikingsGenerated(generated);
         return generated;
+    }
+
+    // для VikingStatisticsService (лямбды)
+
+    @GetMapping("/stats/age/greater")
+    public long countAgeGreaterThan(@RequestParam int age) {
+        return vikingStatisticsService.countByAgeGreaterThan(age);
+    }
+
+    @GetMapping("/stats/age/less")
+    public long countAgeLessThan(@RequestParam int age) {
+        return vikingStatisticsService.countByAgeLessThan(age);
+    }
+
+    @GetMapping("/stats/age/between")
+    public long countAgeBetween(@RequestParam int min, @RequestParam int max) {
+        return vikingStatisticsService.countByAgeBetween(min, max);
+    }
+
+    @GetMapping("/stats/age/outside")
+    public long countAgeOutside(@RequestParam int min, @RequestParam int max) {
+        return vikingStatisticsService.countByAgeOutside(min, max);
+    }
+
+    @GetMapping("/stats/beard-hair")
+    public long countByBeardAndHair(@RequestParam BeardStyle beard, @RequestParam HairColor hair) {
+        return vikingStatisticsService.countByBeardAndHair(beard, hair);
+    }
+
+    @GetMapping("/stats/axes")
+    public long countByAxesCount(@RequestParam int count) {
+        return vikingStatisticsService.countByAxesCount(count);
     }
 }

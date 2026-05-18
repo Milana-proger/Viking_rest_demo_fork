@@ -7,6 +7,7 @@ package ru.mephi.vikingdemo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.mephi.vikingdemo.gui.VikingDesktopFrame;
+import ru.mephi.vikingdemo.gui.VikingStatsFrame;
 import ru.mephi.vikingdemo.model.Viking;
 import ru.mephi.vikingdemo.service.VikingService;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class VikingListener {
     private VikingService service;
     private VikingDesktopFrame gui;
+    private VikingStatsFrame statsFrame;
 
     @Autowired
     public VikingListener(VikingService service) {
@@ -34,6 +36,7 @@ public class VikingListener {
         gui.addNewViking(service.createRandomViking());
     }
 
+    // листенеры для методов сервиса
     public void notifyVikingAdded(Viking viking) {
         if (gui != null) {
             gui.addNewViking(viking);
@@ -59,4 +62,10 @@ public class VikingListener {
             }
         }
     }
+
+    // окно и метод обновления (листенер для статистики)
+    public void setStatsFrame(VikingStatsFrame statsFrame) {
+        this.statsFrame = statsFrame;
+    }
+
 }

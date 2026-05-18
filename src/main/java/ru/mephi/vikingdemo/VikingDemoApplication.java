@@ -31,6 +31,7 @@ public class VikingDemoApplication {
             frame.setVisible(true);
 
             VikingStatsFrame statsFrame = new VikingStatsFrame(vikingStatisticsService);
+            vikingListener.setStatsFrame(statsFrame);
             statsFrame.setVisible(true);
         });
     }
