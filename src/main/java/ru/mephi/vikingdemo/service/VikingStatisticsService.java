@@ -93,4 +93,30 @@ public class VikingStatisticsService {
                 .filter(id -> id % 2 == 0)
                 .toArray(Integer[]::new);
     }
+
+    // Случайный викинг ростом выше 180
+    public Viking getRandomVikingAbove180() {
+        List<Viking> tallVikings = vikingService.findAll().stream()
+                .filter(v -> v.heightCm() > 180)
+                .collect(java.util.stream.Collectors.toList());
+        if (tallVikings.isEmpty()) return null;
+        java.util.Random random = new java.util.Random();
+        return tallVikings.get(random.nextInt(tallVikings.size()));
+    }
+
+    // Все викинги с легендарным снаряжением
+    public List<Viking> getVikingsWithLegendaryGear() {
+        return vikingService.findAll().stream()
+                .filter(v -> v.equipment().stream()
+                        .anyMatch(item -> "Legendary".equals(item.quality())))
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    // Сортированный по возрасту список рыжебородых викингов
+    public List<Viking> getRedBeardedVikingsSortedByAge() {
+        return vikingService.findAll().stream()
+                .filter(v -> v.hairColor() == HairColor.Red && v.beardStyle() == BeardStyle.LONG)
+                .sorted((v1, v2) -> Integer.compare(v1.age(), v2.age()))
+                .collect(java.util.stream.Collectors.toList());
+    }
 }

@@ -136,4 +136,22 @@ public class VikingController {
     public long countByAxesCount(@RequestParam int count) {
         return vikingStatisticsService.countByAxesCount(count);
     }
+
+    // Случайный викинг ростом выше 180
+    @GetMapping("/stats/random-tall")
+    public Viking getRandomVikingAbove180() {
+        return vikingStatisticsService.getRandomVikingAbove180();
+    }
+
+    // Все викинги с легендарным снаряжением
+    @GetMapping("/stats/legendary")
+    public List<Viking> getVikingsWithLegendaryGear() {
+        return vikingStatisticsService.getVikingsWithLegendaryGear();
+    }
+
+    // Рыжебородые, сортированные по возрасту
+    @GetMapping("/stats/red-bearded")
+    public List<Viking> getRedBeardedVikingsSortedByAge() {
+        return vikingStatisticsService.getRedBeardedVikingsSortedByAge();
+    }
 }

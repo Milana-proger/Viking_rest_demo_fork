@@ -5,7 +5,9 @@
 package ru.mephi.vikingdemo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import ru.mephi.vikingdemo.gui.VikingDesktopFrame;
 import ru.mephi.vikingdemo.gui.VikingStatsFrame;
 import ru.mephi.vikingdemo.model.Viking;
@@ -68,4 +70,32 @@ public class VikingListener {
         this.statsFrame = statsFrame;
     }
 
+    // Запрос случайного викинга выше 180 через HTTP
+    public void requestRandomTallViking() {
+        RestTemplate rest = new RestTemplate();
+        Viking viking = rest.getForObject("http://localhost:8080/api/vikings/stats/random-tall", Viking.class);
+        if (gui != null) {
+            gui.showVikingInfo("Случайный викинг выше 180 см", viking);
+        }
+    }
+
+    // Запрос викингов с легендарным снаряжением
+    public void requestLegendaryVikings() {
+        RestTemplate rest = new RestTemplate();
+        ResponseEntity<Viking[]> response = rest.getForEntity("http://localhost:8080/api/vikings/stats/legendary", Viking[].class);
+        List<Viking> vikings = java.util.Arrays.asList(response.getBody());
+        if (gui != null) {
+            gui.showVikingsList("Викинги с легендарным снаряжением", vikings);
+        }
+    }
+
+    // Запрос рыжебородых, сортированных по возрасту
+    public void requestRedBeardedSorted() {
+        RestTemplate rest = new RestTemplate();
+        ResponseEntity<Viking[]> response = rest.getForEntity("http://localhost:8080/api/vikings/stats/red-bearded", Viking[].class);
+        List<Viking> vikings = java.util.Arrays.asList(response.getBody());
+        if (gui != null) {
+            gui.showVikingsList("Рыжебородые викинги (по возрасту)", vikings);
+        }
+    }
 }

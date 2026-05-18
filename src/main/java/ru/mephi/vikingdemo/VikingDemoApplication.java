@@ -30,7 +30,7 @@ public class VikingDemoApplication {
             vikingListener.setGui(frame);
             frame.setVisible(true);
 
-            VikingStatsFrame statsFrame = new VikingStatsFrame(vikingStatisticsService);
+            VikingStatsFrame statsFrame = new VikingStatsFrame(vikingStatisticsService, vikingListener);
             vikingListener.setStatsFrame(statsFrame);
             statsFrame.setVisible(true);
         });

@@ -176,4 +176,32 @@ public class VikingDesktopFrame extends JFrame {
             JOptionPane.showMessageDialog(this, "Ошибка: " + e.getMessage());
         }
     }
+
+    public void showVikingInfo(String title, Viking viking) {
+        SwingUtilities.invokeLater(() -> {
+            if (viking == null) {
+                JOptionPane.showMessageDialog(this, title + ": не найден!");
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        title + ":\n" +
+                                "Имя: " + viking.name() + "\n" +
+                                "Возраст: " + viking.age() + "\n" +
+                                "Рост: " + viking.heightCm() + " см");
+            }
+        });
+    }
+
+    public void showVikingsList(String title, List<Viking> vikings) {
+        SwingUtilities.invokeLater(() -> {
+            if (vikings == null || vikings.isEmpty()) {
+                JOptionPane.showMessageDialog(this, title + ": нет данных!");
+            } else {
+                StringBuilder sb = new StringBuilder(title + ":\n\n");
+                for (Viking v : vikings) {
+                    sb.append(v.name()).append(" (").append(v.age()).append(" лет)\n");
+                }
+                JOptionPane.showMessageDialog(this, sb.toString());
+            }
+        });
+    }
 }
