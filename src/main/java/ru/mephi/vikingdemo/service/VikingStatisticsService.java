@@ -55,13 +55,13 @@ public class VikingStatisticsService {
     }
 
     // 6. Подсчет викингов, имеющих один топор или два топора
-    public long countByAxesCount(int axesCount) {
+    public long countByAxesCount() {
         return vikingService.findAll().stream()
                 .filter(v -> {
                     long axeCount = v.equipment().stream()
                             .filter(item -> item.name().toLowerCase().contains("axe"))
                             .count();
-                    return axeCount == axesCount;
+                    return axeCount == 1 || axeCount == 2;
                 })
                 .count();
     }
@@ -115,7 +115,7 @@ public class VikingStatisticsService {
     // Сортированный по возрасту список рыжебородых викингов
     public List<Viking> getRedBeardedVikingsSortedByAge() {
         return vikingService.findAll().stream()
-                .filter(v -> v.hairColor() == HairColor.Red && v.beardStyle() == BeardStyle.LONG)
+                .filter(v -> v.hairColor() == HairColor.Red && v.beardStyle() != BeardStyle.CLEAN_SHAVEN)
                 .sorted((v1, v2) -> Integer.compare(v1.age(), v2.age()))
                 .collect(java.util.stream.Collectors.toList());
     }
