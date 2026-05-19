@@ -134,7 +134,7 @@ public class VikingController {
 
     @GetMapping("/stats/axes")
     public long countByAxesCount(@RequestParam int count) {
-        return vikingStatisticsService.countByAxesCount(count);
+        return vikingStatisticsService.countByAxesCount();
     }
 
     // Случайный викинг ростом выше 180
