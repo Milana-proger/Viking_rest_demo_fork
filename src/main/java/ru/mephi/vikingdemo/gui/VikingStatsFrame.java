@@ -105,4 +105,5 @@ public class VikingStatsFrame extends JFrame {
         }
     }
 
+
 }

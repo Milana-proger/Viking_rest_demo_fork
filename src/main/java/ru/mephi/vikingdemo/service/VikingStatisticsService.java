@@ -119,4 +119,5 @@ public class VikingStatisticsService {
                 .sorted((v1, v2) -> Integer.compare(v1.age(), v2.age()))
                 .collect(java.util.stream.Collectors.toList());
     }
+
 }

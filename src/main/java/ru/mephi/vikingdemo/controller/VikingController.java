@@ -154,4 +154,5 @@ public class VikingController {
     public List<Viking> getRedBeardedVikingsSortedByAge() {
         return vikingStatisticsService.getRedBeardedVikingsSortedByAge();
     }
+
 }
